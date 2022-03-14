@@ -4,9 +4,12 @@ kind: Service
 metadata:
   name: metastore-db
 spec:
+  type: NodePort
   ports:
-  - port: 13306
+  - protocol: TCP
+    port: 3306
     targetPort: 3306
+    nodePort: 30001
   selector:
     app: mysql
 ---
@@ -39,8 +42,7 @@ spec:
           mountPath: /var/lib/mysql
         resources:
           requests:
-            memory: "8G"
-            cpu: 2
+            memory: "1G"
       volumes:
       - name: mariadb-for-hive
         persistentVolumeClaim:

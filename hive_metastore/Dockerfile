@@ -25,7 +25,7 @@ RUN curl http://apache.uvigo.es/hive/hive-standalone-metastore-3.0.0/hive-standa
 	&& ln -s /opt/apache-hive-metastore-3.0.0-bin /opt/hive-metastore
 
 # Download and install the mysql connector.
-RUN curl -L https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.47.tar.gz \
+RUN curl -L https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.19.tar.gz \
 	| tar xvz -C /opt/ \
-	&& ln -s /opt/mysql-connector-java-5.1.47/mysql-connector-java-5.1.47.jar /opt/hadoop/share/hadoop/common/lib/ \
-	&& ln -s /opt/mysql-connector-java-5.1.47/mysql-connector-java-5.1.47.jar /opt/hive-metastore/lib/ 
+	&& ln -s /opt/mysql-connector-java-8.0.19/mysql-connector-java-8.0.19.jar /opt/hadoop/share/hadoop/common/lib/ \
+	&& ln -s /opt/mysql-connector-java-8.0.19/mysql-connector-java-8.0.19.jar /opt/hive-metastore/lib/

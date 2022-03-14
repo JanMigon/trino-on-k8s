@@ -9,23 +9,27 @@
 </property>
 <property>
 	<name>javax.jdo.option.ConnectionDriverName</name>
-	<value>com.mysql.jdbc.Driver</value>
+	<value>org.postgresql.Driver</value>
 </property>
 <property>
 	<name>javax.jdo.option.ConnectionURL</name>
-	<value>jdbc:mysql://metastore-db.default.svc.cluster.local:13306/metastore_db</value>
+	<value>jdbc:postgresql://postgres-bitnamipostgresql.default.svc.cluster.local:5432/hive</value>
 </property>
 <property>
 	<name>javax.jdo.option.ConnectionUserName</name>
-	<value>root</value>
+	<value>hive</value>
 </property>
 <property>
 	<name>javax.jdo.option.ConnectionPassword</name>
-	<value>mypass</value>
+	<value>hive123</value>
 </property>
 <property>
 	<name>metastore.warehouse.dir</name>
-	<value>s3a://joshuarobinson/warehouse/</value>
+	<value>s3a://trino/warehouse</value>
+</property>
+<property>
+	<name>metastore.thrift.uris</name>
+	<value>thrift://metastore:9083</value>
 </property>
 <property>
 	<name>metastore.thrift.port</name>

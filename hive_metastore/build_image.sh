@@ -2,14 +2,14 @@
 
 set -e
 
-REPONAME=joshuarobinson
-TAG=hivemetastore
+REPONAME=janiomanio/hivemetastore
+TAG=0.1
 
-docker build -t $TAG .
+docker build -t $REPONAME .
 
 # Tag and push to the public docker repository.
-docker tag $TAG $REPONAME/$TAG
-docker push $REPONAME/$TAG
+docker tag $REPONAME $REPONAME:$TAG
+#docker push $REPONAME:$TAG
 
 
 # Update configmaps

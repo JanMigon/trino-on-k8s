@@ -4,6 +4,7 @@ kind: Service
 metadata:
   name: trino
 spec:
+  type: NodePort
   ports:
   - port: 8080
   selector:
@@ -26,20 +27,20 @@ spec:
     spec:
       containers:
       - name: trino
-        image: trinodb/trino:355
+        image: trinodb/trino:371
         ports:
         - containerPort: 8080
         env:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
-              name: my-s3-keys
-              key: access-key
+              name: mlpipeline-minio-artifact
+              key: accesskey
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              name: my-s3-keys
-              key: secret-key
+              name: mlpipeline-minio-artifact
+              key: secretkey
         volumeMounts:
         - name: trino-cfg-vol
           mountPath: /etc/trino/jvm.config
@@ -59,10 +60,12 @@ spec:
         - name: trino-cfg-vol
           mountPath: /etc/trino/catalog/mysql.properties
           subPath: mysql.properties
+        - name: trino-cfg-vol
+          mountPath: /etc/trino/catalog/postgresql.properties
+          subPath: postgresql.properties
         resources:
           requests:
-            memory: "16G"
-            cpu: 4
+            memory: "1G"
         imagePullPolicy: Always
       volumes:
         - name: trino-cfg-vol
@@ -75,7 +78,7 @@ metadata:
   name: trino-worker
 spec:
   serviceName: trino-worker 
-  replicas: 10
+  replicas: 1
   selector:
     matchLabels:
       app: trino-worker
@@ -88,20 +91,20 @@ spec:
         fsGroup: 1000
       containers:
       - name: trino
-        image: trinodb/trino:355
+        image: trinodb/trino:371
         ports:
         - containerPort: 8080
         env:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
-              name: my-s3-keys
-              key: access-key
+              name: mlpipeline-minio-artifact
+              key: accesskey
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              name: my-s3-keys
-              key: secret-key
+              name: mlpipeline-minio-artifact
+              key: secretkey
         volumeMounts:
         - name: trino-cfg-vol
           mountPath: /etc/trino/jvm.config
@@ -121,12 +124,15 @@ spec:
         - name: trino-cfg-vol
           mountPath: /etc/trino/catalog/mysql.properties
           subPath: mysql.properties
+        - name: trino-cfg-vol
+          mountPath: /etc/trino/catalog/postgresql.properties
+          subPath: postgresql.properties
         - name: trino-tmp-data
           mountPath: /tmp
         resources:
           requests:
-            memory: "64G"
-            cpu: 12
+            memory: "1G"
+            cpu: 1
         imagePullPolicy: Always
       volumes:
         - name: trino-cfg-vol
@@ -136,12 +142,12 @@ spec:
   - metadata:
       name: trino-tmp-data
     spec:
-      storageClassName: pure-block
+      storageClassName: standard
       accessModes:
       - ReadWriteOnce
       resources:
         requests:
-          storage: 8Ti
+          storage: 500Mi
 ---
 apiVersion: v1
 kind: Pod
@@ -150,7 +156,7 @@ metadata:
 spec:
   containers:
   - name: trino-cli
-    image: trinodb/trino:355
+    image: trinodb/trino:371
     command: ["tail", "-f", "/dev/null"]
     imagePullPolicy: Always
   restartPolicy: Always

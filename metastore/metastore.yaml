@@ -6,6 +6,7 @@ metadata:
 spec:
   ports:
   - port: 9083
+    targetPort: 9083
   selector:
     app: metastore
 ---
@@ -26,20 +27,30 @@ spec:
     spec:
       containers:
       - name: metastore
-        image: joshuarobinson/hivemetastore
+        #image: docker.io/joshuarobinson/hivemetastore
+        image: docker.io/janiomanio/metastore:0.7
+        #image: docker.io/timveil/docker-hadoop-hive-metastore-standalone
         env:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
-              name: my-s3-keys
-              key: access-key
+              name: mlpipeline-minio-artifact
+              key: accesskey
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              name: my-s3-keys
-              key: secret-key
+              name: mlpipeline-minio-artifact
+              key: secretkey
+        - name: METASTORE_HOME
+          value: /opt/hive-metastore
         ports:
         - containerPort: 9083
+#        livenessProbe:
+#          tcpSocket:
+#            port: 9083
+#        readinessProbe:
+#          tcpSocket:
+#            port: 9083
         volumeMounts:
         - name: metastore-cfg-vol
           mountPath: /opt/hive-metastore/conf/metastore-site.xml
@@ -51,8 +62,7 @@ spec:
         args: ["-p", "9083"]
         resources:
           requests:
-            memory: "32G"
-            cpu: 4
+            memory: "1G"
         imagePullPolicy: Always
       volumes:
         - name: metastore-cfg-vol
