@@ -3,6 +3,7 @@ kind: ConfigMap
 apiVersion: v1 
 metadata:
   name: trino-configs
+  namespace: trino
 data:
   jvm.config: |-
     -server
@@ -44,7 +45,7 @@ data:
     hive.metastore.uri=thrift://metastore:9083
     hive.allow-drop-table=true
     hive.max-partitions-per-scan=1000000
-    hive.s3.endpoint=minio-service.default.svc.cluster.local:9000
+    hive.s3.endpoint=minio-service.trino.svc.cluster.local:9000
     hive.s3.path-style-access=true
     hive.s3.aws-access-key=minio
     hive.s3.aws-secret-key=minio123
@@ -54,7 +55,7 @@ data:
     connector.name=iceberg
     hive.metastore.uri=thrift://metastore:9083
     hive.max-partitions-per-scan=1000000
-    hive.s3.endpoint=minio-service.default.svc.cluster.local:9000
+    hive.s3.endpoint=minio-service.trino.svc.cluster.local:9000
     hive.s3.path-style-access=true
     hive.s3.ssl.enabled=false
     hive.s3.max-connections=100
@@ -65,6 +66,6 @@ data:
     connection-password=mypass
   postgresql.properties: |-
     connector.name=postgresql
-    connection-url=jdbc:postgresql://postgres-bitnamipostgresql.default.svc.cluster.local:5432/postgres
+    connection-url=jdbc:postgresql://postgres-bitnamipostgresql.trino.svc.cluster.local:5432/postgres
     connection-user=postgres
     connection-password=postgres

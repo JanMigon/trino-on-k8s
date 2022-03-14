@@ -10,6 +10,6 @@ spec:
         image:  docker.io/janiomanio/metastore:0.4
         command: ["/opt/hive-metastore/bin/schematool"]
         args: ["--verbose" ,"-initSchema" , "-dbType", "postgres" , "-userName", "hive",
-          "-passWord", "hive123" , "-url", "jdbc:postgresql://postgres-bitnamipostgresql.default.svc.cluster.local:5432/hive"]
+          "-passWord", "hive123" , "-url", "jdbc:postgresql://postgres-bitnamipostgresql.trino.svc.cluster.local:5432/hive"]
       restartPolicy: Never
   backoffLimit: 4

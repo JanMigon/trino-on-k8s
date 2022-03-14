@@ -6,3 +6,5 @@ resources:
 - maria_deployment.yaml
 #- hive-initschema.yaml
 - metastore.yaml
+
+namespace: trino

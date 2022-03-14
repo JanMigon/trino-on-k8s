@@ -28,8 +28,9 @@ spec:
       containers:
       - name: metastore
         #image: docker.io/joshuarobinson/hivemetastore
-        image: docker.io/janiomanio/metastore:0.7
+        #image: docker.io/janiomanio/metastore:0.7
         #image: docker.io/timveil/docker-hadoop-hive-metastore-standalone
+        image: registry.app.corpintra.net/dna/hivemetastore:0.1
         env:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:

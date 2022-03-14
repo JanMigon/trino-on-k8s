@@ -13,7 +13,7 @@
 </property>
 <property>
 	<name>javax.jdo.option.ConnectionURL</name>
-	<value>jdbc:postgresql://postgres-bitnamipostgresql.default.svc.cluster.local:5432/hive</value>
+	<value>jdbc:postgresql://postgres-bitnamipostgresql.trino.svc.cluster.local:5432/hive</value>
 </property>
 <property>
 	<name>javax.jdo.option.ConnectionUserName</name>
