@@ -79,8 +79,8 @@ diagnosticMode:
 ## @param image.debug Specify if debug values should be set
 ##
 image:
-  registry: registry.app.corpintra.net
-  repository: dna/bitnami/postgresql
+  registry: docker.io
+  repository: bitnami/postgresql
   tag: 11.14.0-debian-10-r28
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
